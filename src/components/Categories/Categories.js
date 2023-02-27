@@ -9,11 +9,9 @@ const categoriesData = [
   { name: "Закрытые" },
 ];
 
-export default function Categories() {
-  const [active, setActive] = useState(0);
-
+export default function Categories({ value, setCategoriesId }) {
   const onClickCategory = (index) => {
-    setActive(index);
+    setCategoriesId(index);
   };
   return (
     <div className="categories">
@@ -23,7 +21,7 @@ export default function Categories() {
             <li
               onClick={() => onClickCategory(i)}
               key={i}
-              className={active === i ? "active" : null}
+              className={value === i ? "active" : null}
             >
               {name}
             </li>

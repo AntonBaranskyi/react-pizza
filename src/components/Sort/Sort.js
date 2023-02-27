@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-const sortData = ["популярности", "цене", "алфавиту"];
+const sortData = [
+  {name: 'Популярности', payload: 'rating'},
+  {name: 'Цене', payload: 'price'},
+  {name: 'Алфавиту', payload: 'name'},
+]
 
-export default function Sort() {
+export default function Sort({updateSort}) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+
 
   const handleSort = (i) => {
     setActive(i);
@@ -26,7 +31,7 @@ export default function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sortData[active]}</span>
+        <span onClick={() => setOpen(!open)}>{sortData[active].name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -34,11 +39,14 @@ export default function Sort() {
             {sortData.map((item, i) => {
               return (
                 <li
-                  key={item}
-                  onClick={() => handleSort(i)}
+                  key={item.payload}
+                  onClick={() => {
+                    handleSort(i);
+                    updateSort(item.payload)
+                  }}
                   className={active === i ? "active" : ""}
                 >
-                  {item}
+                  {item.name}
                 </li>
               );
             })}
