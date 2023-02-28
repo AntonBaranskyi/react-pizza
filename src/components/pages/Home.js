@@ -15,6 +15,7 @@ function Home({ searchValue }) {
 
   useEffect(() => {
     getPizzaData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoriesId, sortField, pageNum]);
   let categoriesCheck = categoriesId > 0;
 
