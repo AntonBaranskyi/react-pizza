@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 
 const sortData = [
-  {name: 'Популярности', payload: 'rating'},
-  {name: 'Цене', payload: 'price'},
-  {name: 'Алфавиту', payload: 'name'},
-]
+  { name: "Популярности", payload: "rating" },
+  { name: "Цене", payload: "price" },
+  { name: "Алфавиту", payload: "name" },
+];
 
-export default function Sort({updateSort}) {
+export default function Sort({ updateSort }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
-
 
   const handleSort = (i) => {
     setActive(i);
@@ -42,7 +41,7 @@ export default function Sort({updateSort}) {
                   key={item.payload}
                   onClick={() => {
                     handleSort(i);
-                    updateSort(item.payload)
+                    updateSort(item.payload);
                   }}
                   className={active === i ? "active" : ""}
                 >

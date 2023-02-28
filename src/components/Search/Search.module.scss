@@ -1,0 +1,22 @@
+.root {
+    position: relative;
+}
+
+.input {
+    height: 50px;
+    width: 300px;
+    border: 1px solid rgb(0, 0, 0.1);
+    padding: 10px;
+
+    border-radius: 10px;
+}
+
+.icon {
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    right: 5px;
+    bottom: 17px;
+    cursor: pointer;
+
+}
