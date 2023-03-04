@@ -8,6 +8,8 @@ import { createContext, useState } from "react";
 export const SearchContext = createContext();
 function App() {
   const [searchValue, setSearchValue] = useState("");
+ 
+ 
   return (
     <div className="App">
       <div className="wrapper">
@@ -15,7 +17,7 @@ function App() {
           <Header />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Home/>} />
+              <Route path="/" element={<Home />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

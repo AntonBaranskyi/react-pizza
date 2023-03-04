@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSort } from "../../redux/slices/filtersSlice";
 
 const sortData = [
   { name: "Популярности", payload: "rating" },
@@ -6,7 +8,8 @@ const sortData = [
   { name: "Алфавиту", payload: "name" },
 ];
 
-export default function Sort({ updateSort }) {
+export default function Sort() {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
 
@@ -41,7 +44,7 @@ export default function Sort({ updateSort }) {
                   key={item.payload}
                   onClick={() => {
                     handleSort(i);
-                    updateSort(item.payload);
+                    dispatch(setSort(item.payload));
                   }}
                   className={active === i ? "active" : ""}
                 >

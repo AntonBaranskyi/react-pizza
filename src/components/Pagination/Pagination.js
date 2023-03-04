@@ -6,7 +6,7 @@ function Pagination({ updatePage }) {
   const handlePageClick = (e) => {
     let page = +e.selected;
     updatePage(page + 1);
-  };
+   };
   return (
     <ReactPaginate
       className={style.root}

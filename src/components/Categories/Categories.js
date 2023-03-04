@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setFilterId } from "../../redux/slices/filtersSlice";
 
 const categoriesData = [
   { name: "Все" },
@@ -9,9 +11,11 @@ const categoriesData = [
   { name: "Закрытые" },
 ];
 
-export default function Categories({ value, setCategoriesId }) {
+export default function Categories({ value }) {
+  const dispatch = useDispatch();
+
   const onClickCategory = (index) => {
-    setCategoriesId(index);
+    dispatch(setFilterId(index));
   };
   return (
     <div className="categories">
