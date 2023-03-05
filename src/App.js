@@ -4,12 +4,12 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/NotFound";
 import { createContext, useState } from "react";
+import Basket from "./components/pages/Basket";
 
 export const SearchContext = createContext();
 function App() {
   const [searchValue, setSearchValue] = useState("");
- 
- 
+
   return (
     <div className="App">
       <div className="wrapper">
@@ -18,6 +18,7 @@ function App() {
           <div className="content">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/basket" element={<Basket />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

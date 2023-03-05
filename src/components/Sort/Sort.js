@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSort } from "../../redux/slices/filtersSlice";
 
@@ -13,12 +13,27 @@ export default function Sort() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
 
+  const modalRef = useRef(null);
+
   const handleSort = (i) => {
     setActive(i);
     setOpen(false);
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      window.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [modalRef]);
+
   return (
-    <div className="sort">
+    <div ref={modalRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

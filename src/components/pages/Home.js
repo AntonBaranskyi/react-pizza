@@ -10,12 +10,12 @@ import Pagination from "../Pagination/Pagination";
 import { SearchContext } from "../../App";
 
 function Home() {
-  const { filterId, sort } = useSelector((state) => state.filterReducer);
+  const { filterId, sort, pageNum } = useSelector((state) => state.filterReducer);
 
   const { searchValue } = useContext(SearchContext);
   const [pizzaData, setPizzaData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [pageNum, setPageNum] = useState(1);
+  
 
   useEffect(() => {
     getPizzaData();
@@ -37,7 +37,7 @@ function Home() {
     setLoading(false);
   };
 
-  const updatePage = (num) => setPageNum(num);
+  
 
   const pizzaContent = pizzaData
     .filter((obj) =>
@@ -45,7 +45,7 @@ function Home() {
     )
     .map((items) => <PizzaItem {...items} key={items.id} />);
 
-  const skeletContent = [...new Array(6)].map((_, id) => <Skeleton key={id} />);
+  const skeletContent = [...new Array(3)].map((_, id) => <Skeleton key={id} />);
   return (
     <div className="container">
       <div className="content__top">
@@ -57,7 +57,7 @@ function Home() {
       <div className="content__items">
         {loading ? skeletContent : pizzaContent}
       </div>
-      <Pagination updatePage={(num) => updatePage(num)} />
+      <Pagination />
     </div>
   );
 }

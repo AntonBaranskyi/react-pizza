@@ -2,11 +2,16 @@ import ReactPaginate from "react-paginate";
 import style from "./Pagination.module.scss";
 import React from "react";
 
-function Pagination({ updatePage }) {
+import { useDispatch } from "react-redux";
+import { setPageNum } from "../../redux/slices/filtersSlice";
+
+function Pagination() {
+  const dispatch = useDispatch();
+
   const handlePageClick = (e) => {
     let page = +e.selected;
-    updatePage(page + 1);
-   };
+    dispatch(setPageNum(page + 1));
+  };
   return (
     <ReactPaginate
       className={style.root}

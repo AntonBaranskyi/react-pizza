@@ -1,9 +1,34 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPizzaItem } from "../../redux/slices/pizzaSlice";
 
-export default function PizzaItem({ title, price, types, imageUrl, sizes }) {
+export default function PizzaItem({
+  title,
+  price,
+  types,
+  imageUrl,
+  sizes,
+  id,
+}) {
+  const dispatch = useDispatch();
   const typeData = ["тонкое", "традиционное"];
   const [active, setActive] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
+  const count = useSelector((state) =>
+    state.pizzaReducer.items.find((obj) => obj.id === id)
+  );
+  const addCount = count ? count.count : 0;
+
+  const onAddPizza = () => {
+    const pizzaItem = {
+      id,
+      title,
+      imageUrl,
+      price,
+    };
+
+    dispatch(addPizzaItem(pizzaItem));
+  };
 
   return (
     <div className="pizza-block">
@@ -11,21 +36,24 @@ export default function PizzaItem({ title, price, types, imageUrl, sizes }) {
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          {types && types.map((item,i) => {
-            return (
-              <li key = {i}
-                onClick={() => setActive(item)}
-                className={active === item ? "active" : null}
-              >
-                {typeData[item]}
-              </li>
-            );
-          })}
+          {types &&
+            types.map((item, i) => {
+              return (
+                <li
+                  key={i}
+                  onClick={() => setActive(item)}
+                  className={active === item ? "active" : null}
+                >
+                  {typeData[item]}
+                </li>
+              );
+            })}
         </ul>
         <ul>
           {sizes.map((item, i) => {
             return (
-              <li key = {item}
+              <li
+                key={item}
                 onClick={() => setActiveSize(i)}
                 className={activeSize === i ? "active" : null}
               >
@@ -37,7 +65,10 @@ export default function PizzaItem({ title, price, types, imageUrl, sizes }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <div
+          onClick={onAddPizza}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -51,7 +82,7 @@ export default function PizzaItem({ title, price, types, imageUrl, sizes }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          {addCount ? <i>{addCount}</i> : ""}
         </div>
       </div>
     </div>

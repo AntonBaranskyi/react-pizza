@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 import { SearchContext } from "../../App";
 
+import { useSelector } from "react-redux";
+
 function Header() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
+  const { totalPrice, totalCount } = useSelector((state) => state.pizzaReducer);
+
   return (
     <div className="header">
       <div className="container">
@@ -20,8 +24,8 @@ function Header() {
         </div>
         <Search searchValue={searchValue} setSearchValue={setSearchValue} />
         <div className="header__cart">
-          <Link to="/ds" className="button button--cart">
-            <span>520 ₽</span>
+          <Link to="/basket" className="button button--cart">
+            <span> {totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -52,7 +56,7 @@ function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
