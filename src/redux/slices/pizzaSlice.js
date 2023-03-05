@@ -39,6 +39,22 @@ const pizzaSlice = createSlice({
       state.totalPrice = 0;
     },
 
+    addPizzaPlus: (state, action) => {
+      const index = state.items.find((item) => item.id === action.payload);
+      state.totalCount++;
+      if (index) {
+        index.count++;
+      }
+    },
+
+    pizzaMinus: (state, action) => {
+      const index = state.items.find((item) => item.id === action.payload);
+      state.totalCount--;
+      if (index) {
+        index.count--;
+      }
+    },
+
     deletePizza: (state, action) => {
       const index = state.items.findIndex((obj) => obj.id === action.payload);
 
@@ -47,10 +63,14 @@ const pizzaSlice = createSlice({
 
       state.items = [...before, ...after];
     },
-
-    
   },
 });
 
-export const { addPizzaItem, clearAllPizza, deletePizza } = pizzaSlice.actions;
+export const {
+  addPizzaItem,
+  clearAllPizza,
+  deletePizza,
+  addPizzaPlus,
+  pizzaMinus,
+} = pizzaSlice.actions;
 export default pizzaSlice.reducer;

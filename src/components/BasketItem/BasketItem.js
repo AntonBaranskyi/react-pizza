@@ -1,8 +1,12 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { deletePizza } from "../../redux/slices/pizzaSlice";
+import { useDispatch } from "react-redux";
+import {
+  deletePizza,
+  addPizzaPlus,
+  pizzaMinus,
+} from "../../redux/slices/pizzaSlice";
 
-export default function BasketItem({ title, imageUrl, price, count,id }) {
+export default function BasketItem({ title, imageUrl, price, count, id }) {
   const dispatch = useDispatch();
   return (
     <div className="cart__item">
@@ -14,7 +18,10 @@ export default function BasketItem({ title, imageUrl, price, count,id }) {
         <p>см.</p>
       </div>
       <div className="cart__item-count">
-        <button className="button button--outline button--circle cart__item-count-minus">
+        <button
+          onClick={() => dispatch(pizzaMinus(id))}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <svg
             width="10"
             height="10"
@@ -33,7 +40,10 @@ export default function BasketItem({ title, imageUrl, price, count,id }) {
           </svg>
         </button>
         <b>{count}</b>
-        <button className="button button--outline button--circle cart__item-count-plus">
+        <button
+          onClick={() => dispatch(addPizzaPlus(id))}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <svg
             width="10"
             height="10"
@@ -53,7 +63,7 @@ export default function BasketItem({ title, imageUrl, price, count,id }) {
         </button>
       </div>
       <div className="cart__item-price">
-        <b>{price} ₽</b>
+        <b>{price * count} ₽</b>
       </div>
       <div
         onClick={() => dispatch(deletePizza(id))}

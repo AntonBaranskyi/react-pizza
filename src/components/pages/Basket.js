@@ -3,7 +3,7 @@ import BasketItem from "../BasketItem/BasketItem";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAllPizza } from "../../redux/slices/pizzaSlice";
-import PizzaItem from "../PizzaBlock/PizzaItem";
+
 
 function Basket() {
   const dispatch = useDispatch();
