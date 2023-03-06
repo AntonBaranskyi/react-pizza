@@ -1,76 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+export const fetchPizza = createAsyncThunk("pizzas/fetch", async (params) => {
+  const { categoriesCheck, filterId, sort, pageNum } = params;
+  const responce = await fetch(
+    `https://63f8b2491dc21d5465c4eaf9.mockapi.io/items?${
+      categoriesCheck ? `category=${filterId}` : ""
+    }${sort ? `&sortBy=${sort}` : ""}&page=${pageNum}&limit=3`
+  );
+
+  return await responce.json();
+});
 const initialState = {
   items: [],
-  totalPrice: 0,
-  totalCount: 0,
+  status: "loading", // loading | success | error
 };
 
 const pizzaSlice = createSlice({
   name: "pizza",
   initialState,
   reducers: {
-    addPizzaItem: (state, action) => {
-      const findId = state.items.find((item) => item.id === action.payload.id);
-
-      if (findId) {
-        findId.count++;
-      } else {
-        state.items.push({
-          ...action.payload,
-          count: 1,
-        });
-      }
-      const price = state.items.reduce((acumulator, current) => {
-        return acumulator + current.count * current.price;
-      }, 0);
-
-      state.totalPrice = price;
-
-      const sumCount = state.items.reduce((sum, current) => {
-        return current.count + sum;
-      }, 0);
-      state.totalCount = sumCount;
+    getAllPizza: (state, action) => {
+      state.items = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPizza.pending, (state) => {
+      state.status = "loading";
+    });
 
-    clearAllPizza: (state) => {
-      state.items = [];
-      state.totalCount = 0;
-      state.totalPrice = 0;
-    },
+    builder.addCase(fetchPizza.fulfilled, (state, action) => {
+      state.items = action.payload;
+      state.status = "success";
+    });
 
-    addPizzaPlus: (state, action) => {
-      const index = state.items.find((item) => item.id === action.payload);
-      state.totalCount++;
-      if (index) {
-        index.count++;
-      }
-    },
-
-    pizzaMinus: (state, action) => {
-      const index = state.items.find((item) => item.id === action.payload);
-      state.totalCount--;
-      if (index) {
-        index.count--;
-      }
-    },
-
-    deletePizza: (state, action) => {
-      const index = state.items.findIndex((obj) => obj.id === action.payload);
-
-      const before = state.items.slice(0, index);
-      const after = state.items.slice(index + 1);
-
-      state.items = [...before, ...after];
-    },
+    builder.addCase(fetchPizza.rejected, (state, action) => {
+      state.items = action.payload;
+      state.status = "error";
+    });
   },
 });
 
-export const {
-  addPizzaItem,
-  clearAllPizza,
-  deletePizza,
-  addPizzaPlus,
-  pizzaMinus,
-} = pizzaSlice.actions;
+export const { getAllPizza } = pizzaSlice.actions;
 export default pizzaSlice.reducer;

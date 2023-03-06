@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPizzaItem } from "../../redux/slices/pizzaSlice";
+import { addPizzaItem } from "../../redux/slices/basketSlice";
 
 export default function PizzaItem({
   title,
@@ -15,7 +15,7 @@ export default function PizzaItem({
   const [active, setActive] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const count = useSelector((state) =>
-    state.pizzaReducer.items.find((obj) => obj.id === id)
+    state.basketReducer.items.find((obj) => obj.id === id)
   );
   const addCount = count ? count.count : 0;
 

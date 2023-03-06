@@ -4,7 +4,7 @@ import {
   deletePizza,
   addPizzaPlus,
   pizzaMinus,
-} from "../../redux/slices/pizzaSlice";
+} from "../../redux/slices/basketSlice";
 
 export default function BasketItem({ title, imageUrl, price, count, id }) {
   const dispatch = useDispatch();

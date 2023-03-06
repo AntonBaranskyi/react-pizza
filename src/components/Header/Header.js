@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function Header() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
-  const { totalPrice, totalCount } = useSelector((state) => state.pizzaReducer);
+  const { totalPrice, totalCount } = useSelector((state) => state.basketReducer);
 
   return (
     <div className="header">
