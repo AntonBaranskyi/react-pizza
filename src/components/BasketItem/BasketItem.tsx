@@ -6,7 +6,21 @@ import {
   pizzaMinus,
 } from "../../redux/slices/basketSlice";
 
-export default function BasketItem({ title, imageUrl, price, count, id }) {
+interface IBasketItem {
+  title: string;
+  imageUrl: string;
+  price: number;
+  count: number;
+  id: number;
+}
+
+const BasketItem: React.FC<IBasketItem> = ({
+  title,
+  imageUrl,
+  price,
+  count,
+  id,
+}) => {
   const dispatch = useDispatch();
   return (
     <div className="cart__item">
@@ -90,4 +104,5 @@ export default function BasketItem({ title, imageUrl, price, count, id }) {
       </div>
     </div>
   );
-}
+};
+export default BasketItem;

@@ -1,14 +1,17 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import logo from "../../assets/pizza-logo.svg";
 import { Link } from "react-router-dom";
 import Search from "../Search/Search";
 import { SearchContext } from "../../App";
 
 import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 function Header() {
   const { searchValue, setSearchValue } = useContext(SearchContext);
-  const { totalPrice, totalCount } = useSelector((state) => state.basketReducer);
+  const { totalPrice, totalCount } = useSelector(
+    (state: RootState) => state.basketReducer
+  );
 
   return (
     <div className="header">

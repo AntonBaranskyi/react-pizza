@@ -1,7 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface IBasket {
+  id: number;
+  title: string;
+  imageUrl: string
+  price: number;
+  count: number;
+}
+interface IState {
+  items: IBasket[];
 
+  totalPrice: number;
+  totalCount: number;
 
-const initialState = {
+}
+const initialState: IState = {
   items: [],
   totalPrice: 0,
   totalCount: 0,
@@ -11,7 +23,7 @@ const pizzaSlice = createSlice({
   name: "basket",
   initialState,
   reducers: {
-    addPizzaItem: (state, action) => {
+    addPizzaItem: (state, action: PayloadAction<IBasket>) => {
       const findId = state.items.find((item) => item.id === action.payload.id);
 
       if (findId) {
@@ -40,7 +52,7 @@ const pizzaSlice = createSlice({
       state.totalPrice = 0;
     },
 
-    addPizzaPlus: (state, action) => {
+    addPizzaPlus: (state, action: PayloadAction<number>) => {
       const index = state.items.find((item) => item.id === action.payload);
       state.totalCount++;
       if (index) {
@@ -48,7 +60,7 @@ const pizzaSlice = createSlice({
       }
     },
 
-    pizzaMinus: (state, action) => {
+    pizzaMinus: (state, action: PayloadAction<number>) => {
       const index = state.items.find((item) => item.id === action.payload);
       state.totalCount--;
       if (index) {
@@ -56,7 +68,7 @@ const pizzaSlice = createSlice({
       }
     },
 
-    deletePizza: (state, action) => {
+    deletePizza: (state, action: PayloadAction<number>) => {
       const index = state.items.findIndex((obj) => obj.id === action.payload);
 
       const before = state.items.slice(0, index);

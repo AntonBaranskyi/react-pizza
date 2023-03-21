@@ -9,14 +9,28 @@ import Pagination from "../Pagination/Pagination";
 import { SearchContext } from "../../App";
 import { fetchPizza } from "../../redux/slices/pizzaSlice";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { RootState, useAppDispatch } from "../../redux/store";
 
-function Home() {
+export interface IPizza {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+  category: number;
+  rating: number;
+}
+
+const Home: React.FC = () => {
   const { filterId, sort, pageNum } = useSelector(
-    (state) => state.filterReducer
+    (state: RootState) => state.filterReducer
   );
-  const { items, status } = useSelector((state) => state.pizzaReducer);
+  const { items, status } = useSelector(
+    (state: RootState) => state.pizzaReducer
+  );
 
-  const disaptch = useDispatch();
+  const disaptch = useAppDispatch();
 
   const { searchValue } = useContext(SearchContext);
 
@@ -37,11 +51,13 @@ function Home() {
     );
   };
 
-  const pizzaContent = items && items
-    .filter((obj) =>
-      obj.title.toLowerCase().includes(searchValue.toLowerCase())
-    )
-    .map((items) => <PizzaItem {...items} key={items.id} />);
+  const pizzaContent =
+    items &&
+    items
+      .filter((obj: IPizza) =>
+        obj.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((items: IPizza) => <PizzaItem {...items} key={items.id} />);
 
   const skeletContent = [...new Array(3)].map((_, id) => <Skeleton key={id} />);
 
@@ -60,6 +76,6 @@ function Home() {
       <Pagination />
     </div>
   );
-}
+};
 
 export default Home;

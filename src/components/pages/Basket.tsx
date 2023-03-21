@@ -3,11 +3,12 @@ import BasketItem from "../BasketItem/BasketItem";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAllPizza } from "../../redux/slices/basketSlice";
+import { RootState } from "../../redux/store";
 
 function Basket() {
   const dispatch = useDispatch();
   const { items, totalPrice, totalCount } = useSelector(
-    (state) => state.pizzaReducer
+    (state: RootState) => state.basketReducer
   );
 
   const removeAllPizza = () => {
@@ -91,7 +92,7 @@ function Basket() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => (
+          {items.map((item ) => (
             <BasketItem key={item.id} {...item} />
           ))}
         </div>

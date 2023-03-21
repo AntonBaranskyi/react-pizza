@@ -2,7 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSort } from "../../redux/slices/filtersSlice";
 
-const sortData = [
+interface ISort {
+  name: string;
+  payload: string;
+}
+
+const sortData: ISort[] = [
   { name: "Популярности", payload: "rating" },
   { name: "Цене", payload: "price" },
   { name: "Алфавиту", payload: "name" },
@@ -13,15 +18,15 @@ export default function Sort() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
 
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  const handleSort = (i) => {
+  const handleSort = (i: number) => {
     setActive(i);
     setOpen(false);
   };
 
   useEffect(() => {
-    const handleOutsideClick = (event) => {
+    const handleOutsideClick = (event: any) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         setOpen(false);
       }

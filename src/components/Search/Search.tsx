@@ -4,13 +4,22 @@ import styles from "./Search.module.scss";
 import icon from "../../assets/close_icon.svg";
 
 import { DebounceInput } from "react-debounce-input";
-function Search({ searchValue, setSearchValue }) {
-  const inputRef = useRef();
 
-  const changeInput = (e)=>{
-    setSearchValue(e.target.value)
+interface ISearch {
+  searchValue: string;
+  setSearchValue: (target: string) => void;
+}
+const Search: React.FC<ISearch> = ({ searchValue, setSearchValue }) => {
+  const inputRef = useRef<DebounceInput>(null);
+
+  const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
     console.log(e.target.value);
-  }
+  };
+
+  const closeSearch = (e: React.ChangeEvent<HTMLImageElement>): void => {
+    setSearchValue("");
+  };
   return (
     <div className={styles.root}>
       <DebounceInput
@@ -25,7 +34,7 @@ function Search({ searchValue, setSearchValue }) {
 
       {searchValue && (
         <img
-          onClick={() => setSearchValue("")}
+          onClick={() => closeSearch}
           className={styles.icon}
           alt="close"
           src={icon}
@@ -33,6 +42,6 @@ function Search({ searchValue, setSearchValue }) {
       )}
     </div>
   );
-}
+};
 
 export default Search;

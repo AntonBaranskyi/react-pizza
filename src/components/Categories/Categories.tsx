@@ -2,7 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setFilterId } from "../../redux/slices/filtersSlice";
 
-const categoriesData = [
+interface ICategory {
+  name: string;
+}
+const categoriesData: ICategory[] = [
   { name: "Все" },
   { name: "Мясные" },
   { name: "Вегетарианская" },
@@ -11,10 +14,10 @@ const categoriesData = [
   { name: "Закрытые" },
 ];
 
-export default function Categories({ value }) {
+const Categories: React.FC<{ value: number }> = ({ value }) => {
   const dispatch = useDispatch();
 
-  const onClickCategory = (index) => {
+  const onClickCategory = (index: number): void => {
     dispatch(setFilterId(index));
   };
   return (
@@ -25,7 +28,7 @@ export default function Categories({ value }) {
             <li
               onClick={() => onClickCategory(i)}
               key={i}
-              className={value === i ? "active" : null}
+              className={value === i ? "active" : ""}
             >
               {name}
             </li>
@@ -34,4 +37,6 @@ export default function Categories({ value }) {
       </ul>
     </div>
   );
-}
+};
+
+export default Categories;

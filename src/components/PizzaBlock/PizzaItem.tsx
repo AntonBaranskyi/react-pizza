@@ -2,20 +2,29 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPizzaItem } from "../../redux/slices/basketSlice";
 
-export default function PizzaItem({
+interface IPizaItem {
+  title: string;
+  price: number;
+  types: number[];
+  sizes: number[];
+  imageUrl: string;
+  id: number;
+}
+
+const PizzaItem: React.FC<IPizaItem> = ({
   title,
   price,
   types,
   imageUrl,
   sizes,
   id,
-}) {
+}) => {
   const dispatch = useDispatch();
   const typeData = ["тонкое", "традиционное"];
   const [active, setActive] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-  const count = useSelector((state) =>
-    state.basketReducer.items.find((obj) => obj.id === id)
+  const count = useSelector((state: any) =>
+    state.basketReducer.items.find((obj: any) => obj.id === id)
   );
   const addCount = count ? count.count : 0;
 
@@ -42,7 +51,7 @@ export default function PizzaItem({
                 <li
                   key={i}
                   onClick={() => setActive(item)}
-                  className={active === item ? "active" : null}
+                  className={active === item ? "active" : ""}
                 >
                   {typeData[item]}
                 </li>
@@ -55,7 +64,7 @@ export default function PizzaItem({
               <li
                 key={item}
                 onClick={() => setActiveSize(i)}
-                className={activeSize === i ? "active" : null}
+                className={activeSize === i ? "active" : ""}
               >
                 {item + "cm"}
               </li>
@@ -87,4 +96,6 @@ export default function PizzaItem({
       </div>
     </div>
   );
-}
+};
+
+export default PizzaItem;

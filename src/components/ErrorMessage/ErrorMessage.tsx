@@ -1,8 +1,7 @@
+import React from "react";
 import error from "./error.gif";
 
-import React from "react";
-
-export default function ErrorMessage() {
+const ErrorMessage: React.FC = () => {
   return (
     <img
       style={{ margin: "0 auto", marginBottom: "25px" }}
@@ -10,4 +9,6 @@ export default function ErrorMessage() {
       alt="error"
     />
   );
-}
+};
+
+export default ErrorMessage;
